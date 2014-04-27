@@ -1,0 +1,648 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+    <title>JFSP</title>
+    <script src="../jquery-1.8.0.min.js" type="text/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <link href="../style.css" rel="stylesheet" type="text/css">
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type=
+    "text/css">
+    <link href="http://nimbus.cos.uidaho.edu/JFSP/images/jfspmain.png" rel=
+    "icon" type="image/x-icon">
+    <script>
+  function initialize() {
+        var center = new google.maps.LatLng(34.0522,19.2428);
+        var mapOptions = {
+          zoom: 11,
+          center: center,
+          streetViewControl: false,
+          mapTypeControl: true,
+          mapTypeControlOptions: {
+              style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+              },
+                zoomControl: true,
+                zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.SMALL
+              },
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+        var markerLayer = new google.maps.KmlLayer('http://nimbus.cos.uidaho.edu/JFSP/SoCalRAWS.kml');
+        markerLayer.setMap(map);
+        
+        google.maps.event.addListener(markerLayer, 'click', function(kmlEvent) {
+        $('#StationName').attr("value", kmlEvent.featureData.name);
+        //alert(kmlEvent.featureData.name);     
+         });
+
+        
+      }
+    </script>
+    <script type="text/javascript">
+$(document).ready(function () {
+
+        // load google map
+        initialize();
+
+
+
+        // Set Path to files
+        //url = "http://nimbus.cos.uidaho.edu/JFSP/SoCAL/FW9/";
+
+        //This triggers an event when the Station Name ComboBox is Selected
+        $("#Chooser").change(function () {
+            //$("select").append("<option>New option<\/option>");
+            //alert($(this).val());
+            //$("#toggler").toggleClass("hide");
+            //$('#StationName').attr("value", "calp");
+
+            if ($(this).val() == 'CMIP3') {
+                //alert($(this).val());
+                $("#ModelNumber").find('option').remove().end().append('<option value="_1"> BCCR-BCM2.0<\/option><option value="_2"> CGCM3.1(T47)<\/option><option value="_3"> CGCM3.1(T63)<\/option><option value="_4"> CNRM-CM3<\/option><option value="_5"> CSIRO-Mk3.5<\/option><option value="_6"> GFDL-CM2.0<\/option><option value="_7"> GFDL-CM2.1<\/option><option value="_8"> IPSL-CM4<\/option><option value="_9"> FGOALS-g1.0<\/option><option value="_10"> ECHAM5/MPI-OM<\/option><option value="_11"> MRI-CGCM2.3.2<\/option><option value="_12"> MIROC3.2(hires)<\/option><option value="_13"> MIROC3.2(medres)<\/option>');
+                $("#Scenario").html('<option value="">Historical<\/option><option value="_a1b">A1B<\/option>');
+                $("#ModelRun").html('<option value="">1971-2000<\/option>');
+
+            }
+
+
+            if ($(this).val() == 'CMIP5') {
+                //alert($(this).val());
+                //queryStr = '';
+                //queryStr += $("#ModelNumber").val();
+                //queryStr +=$("#ModelRun").val();
+                //queryStr += $("#Scenario").val();
+                $("#ModelNumber").find('option').remove().end().append('<option value="_bcc-csm1-1"> bcc-csm1-1<\/option> <option value="_BNU-ESM"> BNU-ESM<\/option> <option value="_CanESM2"> CanESM2<\/option> <option value="_CNRM-CM5"> CNRM-CM5<\/option> <option value="_CSIRO-MK3-6-0"> CSIRO-MK3.6<\/option> <option value="_GFDL-ESM2G"> GFDL-ESM2G<\/option> <option value="_GFDL-ESM2M"> GFDL-ESM2M<\/option> <option value="_HadGEM2-ES"> HadGEM2-ES<\/option> <option value="_HadGEM2-CC"> HadGEM2-CC<\/option> <option value="_inmcm4"> inmcm4<\/option> <option value="_MIROC5"> MIROC5<\/option> <option value="_MIROC-ESM"> MIROC-ESM<\/option> <option value="_MIROC-ESM-CHEM">MIROC-ESM-CHEM<\/option> <option value="_MRI-CGCM3">MRI-CGCM3<\/option>');
+                $("#Scenario").html('<option value="_historical">Historical<\/option><option value="_rcp45">RCP4.5<\/option> <option value="_rcp85">RCP8.5<\/option> ');
+                $("#ModelRun").html('<option value="">1950-2005<\/option>');
+            }
+
+            if ($(this).val() == 'Observations (1996-2010)') {
+                //alert($(this).val());
+                $("#ModelNumber").find('option').remove().end().append('<option value="">n/a<\/option>');
+                $("#Scenario").html('<option value="">n/a<\/option>');
+                $("#ModelRun").html('<option value="">n/a<\/option>');
+
+            }
+
+
+
+
+
+        });
+
+        // Determine if ther should be an option for a model run
+        $("#Scenario").change(function () {
+            //alert($("#Scenario").val());
+            if ($("#Scenario").val()=="_historical") {
+                $("#ModelRun").html('<option value="">1950-2005<\/option>');
+            }
+            if ($("#Scenario").val()=="_rcp45") {
+                $("#ModelRun").html('<option value="">2006-2100<\/option>');
+            }
+            if ($("#Scenario").val()=="_rcp85") {
+                $("#ModelRun").html('<option value="">2006-2100<\/option>');
+            }
+            if ($("#Scenario").val()=="_a1b") {
+                $("#ModelRun").html('<option value="_mid21">2046-2065<\/option><option value="_lat21">2081-2100<\/option>');
+            }
+            if ($("#Scenario").val()=="") {
+                $("#ModelRun").html('<option value="">1971-2000<\/option>');
+            }
+        });
+
+
+        // Submit button pressed
+        $('input[type=submit]').click(this, function () {
+
+            var queryStr = "http://nimbus.cos.uidaho.edu/JFSP/SoCAL/FW9/";
+            queryStr += $("#StationName").val();
+            queryStr += $("#ModelNumber").val();
+            queryStr += $("#ModelRun").val();
+            queryStr += $("#Scenario").val();
+            queryStr += ".fw9"
+
+            $('#DataURL').html('<a href=' + queryStr + '> Requested Data<\/a>');
+            window.open(queryStr);
+            //window.location.href = queryStr;
+            //alert(queryStr);
+        });
+
+    });
+    </script>
+</head>
+
+<body>
+    <div class="container text-center">
+        <h1>Assessing Fuels Treatments in Southern California National Forests
+        in the Context of Climate Change</h1>
+    </div>
+
+    <div class="container">
+        <div class="masthead">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <ul class="nav">
+                            <li>
+                                <a href="../index.html">Home</a>
+                            </li>
+
+                            <li>
+                                <a href="findings.html">Key Findings</a>
+                            </li>
+
+                            <li class="active">
+                                <a href="data.html">Data</a>
+                            </li>
+
+                            <li>
+                                <a href="climatescenarios.html">Climate
+                                Scenarios</a>
+                            </li>
+
+                            <li>
+                                <a href="howto.html">BEST PRACTICES and
+                                Tutorial</a>
+                            </li>
+
+                            <li>
+                                <a href="publications.html">Publications</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- /.navbar -->
+        </div>
+
+
+        <div class="row text-center" >
+        	
+        	<div class="span12">
+        		<h3 class="text-center">Instructions</h3>
+        		<div class="row">
+        		
+        		<div class="span6">
+        			
+        		<h5>Step 1</h5>	
+        		
+        		<p class="text-center">
+        			On the map below, click on a blue map marker to bring up location information.
+        		</p>
+	
+        		</div>
+        		
+        		        		<div class="span6">
+        			
+        		<h5>Step 2</h5>	
+        		
+        		<p class="text-center">
+        			Select all options below and press the Sumit button to request data. Hover over <span id="mainHelp" title="You did it!">?</span> for more help
+        		</p>
+	
+        		</div>
+        		        		</div>
+        		
+        	</div>
+        	
+        </div>
+
+<hr class="featurette-divider">
+
+        <div class="row">
+            <div class="span6">
+                <div id="map">
+                    <div id="map_canvas"></div>
+                </div>
+            </div>
+
+
+
+            <div class="span6">
+            	
+            	
+
+            	
+            	
+            	
+                <div id="jQueryTool">
+                    <table id="table" class="table table-striped table-bordered">
+                        <tr>
+                            <td>Select Type:</td>
+
+                            <td><select id="Chooser">
+                                <option selected="selected">
+                                    CMIP3
+                                </option>
+
+                                <option>
+                                    CMIP5
+                                </option>
+
+                                <option>
+                                    Observations (1996-2010)
+                                </option>
+                            </select></td>
+
+                            <td>
+                                <div id="typeHelp" title=
+                                "Select type of data.">
+                                    ?
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Name:</td>
+
+                            <td><select id="StationName">
+                                <option value="cact">
+                                    Acton
+                                </option>
+
+                                <option value="calp">
+                                    Alpine
+                                </option>
+
+                                <option value="canz">
+                                    Anza
+                                </option>
+
+                                <option value="cagd">
+                                    Arroyo Grande
+                                </option>
+
+                                <option value="cbcn">
+                                    Bell Canyon
+                                </option>
+
+                                <option value="cbev">
+                                    Beverly Hills
+                                </option>
+
+                                <option value="cbra">
+                                    Branch Mtn
+                                </option>
+
+                                <option value="cbur">
+                                    Burns Canyon
+                                </option>
+
+                                <option value="ccam">
+                                    Cameron FS
+                                </option>
+
+                                <option value="ccp9">
+                                    Camp 9
+                                </option>
+
+                                <option value="ccar">
+                                    Carrizo
+                                </option>
+
+                                <option value="ccas">
+                                    Case Springs
+                                </option>
+
+                                <option value="cchb">
+                                    Cheeseboro
+                                </option>
+
+                                <option value="cchi">
+                                    Chilao
+                                </option>
+
+                                <option value="cchu">
+                                    Chuchupate
+                                </option>
+
+                                <option value="ccla">
+                                    Claremont
+                                </option>
+
+                                <option value="ccon">
+                                    Converse
+                                </option>
+
+                                <option value="ccoa">
+                                    Corona
+                                </option>
+
+                                <option value="cdva">
+                                    Del Valle
+                                </option>
+
+                                <option value="cdes">
+                                    Descanso
+                                </option>
+
+                                <option value="cdvr">
+                                    Devore
+                                </option>
+
+                                <option value="celc">
+                                    El Cariso
+                                </option>
+
+                                <option value="celm">
+                                    El Mirage
+                                </option>
+
+                                <option value="cfaw">
+                                    Fawnskin
+                                </option>
+
+                                <option value="cfre">
+                                    Fremont Canyon
+                                </option>
+
+                                <option value="cgoo">
+                                    Goose Valley
+                                </option>
+
+                                <option value="cjul">
+                                    Julian
+                                </option>
+
+                                <option value="ckee">
+                                    Keenwild
+                                </option>
+
+                                <option value="cleo">
+                                    Leo Carrillo
+                                </option>
+
+                                <option value="clop">
+                                    Los Prietos
+                                </option>
+
+                                <option value="clho">
+                                    Lost Horse
+                                </option>
+
+                                <option value="clsf">
+                                    Las Flores
+                                </option>
+
+                                <option value="cmal">
+                                    Malibu Hills
+                                </option>
+
+                                <option value="cmil">
+                                    Mill Creek
+                                </option>
+
+                                <option value="cmnc">
+                                    Montecito
+                                </option>
+
+                                <option value="cmor">
+                                    Mormon Rocks
+                                </option>
+
+                                <option value="clag">
+                                    Mt Laguna
+                                </option>
+
+                                <option value="cokg">
+                                    Oak Grove
+                                </option>
+
+                                <option value="coja">
+                                    Ojai
+                                </option>
+
+                                <option value="cphi">
+                                    Pine Hills
+                                </option>
+
+                                <option value="cpop">
+                                    Poppy Park
+                                </option>
+
+                                <option value="crch">
+                                    Ranchita
+                                </option>
+
+                                <option value="cros">
+                                    Rose Valley
+                                </option>
+
+                                <option value="csfd">
+                                    Santa Fe Dam
+                                </option>
+
+                                <option value="csro">
+                                    Santa Rosa Plateau
+                                </option>
+
+                                <option value="csau">
+                                    Saugus
+                                </option>
+
+                                <option value="ctan">
+                                    Tanbark
+                                </option>
+
+                                <option value="ctar">
+                                    Target Range
+                                </option>
+
+                                <option value="cval">
+                                    Valley Center
+                                </option>
+
+                                <option value="cwar">
+                                    Warm Springs
+                                </option>
+
+                                <option value="cwhh">
+                                    Whittier Hills
+                                </option>
+                            </select></td>
+
+                            <td>
+                                <div id="nameHelp" title=
+                                "Names correspond with locations on the map.">
+                                    ?
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Model:</td>
+
+                            <td><select id="ModelNumber">
+                                <option value="_1">
+                                    BCCR-BCM2.0
+                                </option>
+
+                                <option value="_2">
+                                    CGCM3.1(T47)
+                                </option>
+
+                                <option value="_3">
+                                    CGCM3.1(T63)
+                                </option>
+
+                                <option value="_4">
+                                    CNRM-CM3
+                                </option>
+
+                                <option value="_5">
+                                    CSIRO-Mk3.5
+                                </option>
+
+                                <option value="_6">
+                                    GFDL-CM2.0
+                                </option>
+
+                                <option value="_7">
+                                    GFDL-CM2.1
+                                </option>
+
+                                <option value="_8">
+                                    IPSL-CM4
+                                </option>
+
+                                <option value="_9">
+                                    FGOALS-g1.0
+                                </option>
+
+                                <option value="_10">
+                                    ECHAM5/MPI-OM
+                                </option>
+
+                                <option value="_11">
+                                    MRI-CGCM2.3.2
+                                </option>
+
+                                <option value="_12">
+                                    MIROC3.2(hires)
+                                </option>
+
+                                <option value="_13">
+                                    MIROC3.2(medres)
+                                </option>
+                            </select></td>
+
+                            <td>
+                                <div id="modelHelp" title=
+                                "More information can be found at http://www-pcmdi.llnl.gov/ipcc/model_documentation/ipcc_model_documentation.html">
+                                ?
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Scenario:</td>
+
+                            <td><select id="Scenario">
+                                <option value="">
+                                    Historical
+                                </option>
+
+                                <option value="_a1b">
+                                    A1B
+                                </option>
+                            </select></td>
+
+                            <td>
+                                <div id="scenarioHelp" title=
+                                "Choose a scenario.">
+                                    ?
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Time Span:</td>
+
+                            <td><select id="ModelRun">
+                                <option value="">
+                                    1971-2000
+                                </option>
+                            </select></td>
+
+                            <td>
+                                <div id="runHelp" title=
+                                "Select time for data.">
+                                    ?
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
+
+                    <div id="CMIP3"></div>
+<input class="btn btn-large btn-primary pull-right" id="Submit" type="submit">
+
+                </div>
+            </div>
+        </div>
+<hr class="featurette-divider">
+                    	                    <p>
+                        Once Submit button is pressed a link will appear below.
+                        Right click on the link and choose save link as to
+                        download the data from the previous request.
+                    </p>
+
+                    <div id="DataURL"></div>
+
+        <div class="container">
+            <hr class="featurette-divider">
+
+            <div class="navbar navbar-bottom" id="footer">
+                <div class="row text-center">
+                    <div class="span4"><img id="jfspLogo" src=
+                    "../images/jfsp.png"></div>
+
+                    <div class="span4"><img id="uiLogo" src=
+                    "../images/uidaho.png"></div>
+
+                    <div class="span4"><img id="driLogo" src=
+                    "../images/dri.jpg"></div>
+                </div>
+
+                <div class="row text-center">
+                    <div class="span4">
+                        Joint Fire Science Program
+                    </div>
+
+                    <div class="span4">
+                        University of Idaho
+                    </div>
+
+                    <div class="span4">
+                        Desert Research Institute
+                    </div>
+                </div>
+                <hr class="featurette-divider">
+
+                <div class="row">
+                    <div class="span12 text-center">
+                        <p><a href="../index.html">Home</a> - <a href=
+                        "findings.html">Key Findings</a> - <a href=
+                        "data.html">Data</a> - <a href=
+                        "climatescenarios.html">Climate Scenarios</a> -
+                        <a href="howto.html">BEST PRACTICES and
+                        Tutorial</a> - <a href=
+                        "publications.html">Publications</a></p>
+                    </div>
+
+                    <div class="span12 text-center">
+                        <p>All Rights Reserved. © 2012</p>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <p class="pull-right"><a href="#">Back to top</a></p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>JFSP</title>
+  <script type="text/javascript" src="../jquery-1.8.0.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<link href="../style.css" rel="stylesheet" type="text/css">
+<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="http://nimbus.cos.uidaho.edu/JFSP/images/jfspmain.png" rel="icon" type="image/x-icon">
+<!--[if (lte IE 6)|(gte IE 8)]>
+<style type="text/css">
+#wrapper {height:100%;display:table;}
+</style>
+<![endif]-->
+
+
+  <style type="text/css">
+     .hide {display:none;}
+
+
+
+  </style>
+
+
+ <script type="text/javascript">
+        (function($){
+                window.getPic = function(){
+                //if ( !$('#spatt').val() ) return;
+                //if ( !$('#periodd').val() ) return;
+                //if ( !$('#scenn').val() ) return;
+                //if ( !$('#varr1').val() ) return;
+                //if ( !$('#seass1').val() ) return;
+                //if ( !$('#varr2').val() ) return;
+                //if ( !$('#seass2').val() ) return;
+
+                var url = 'http://nimbus.cos.uidaho.edu/JFSP/images/visualization/'
+                //var url = "../images/visualization/rcp45_2030-2060_Annual_tasmean_vs_Annual_tasmeanSCA.png"
+
+
+                $('img#target_image').attr({src: url
+                                                 + $('#scenn').val().toString() +'_'
+                                                 + $('#periodd').val().toString() +'_'
+                                                 + $('#seass1').val().toString() + '_'
+                                                 + $('#varr1').val().toString() + '_vs_' 
+                                                 + $('#seass2').val().toString() +'_'
+                                                 + $('#varr2').val().toString()
+                                                 + $('#spatt').val().toString() +'.png'});              
+                } //  getPic
+        })(jQuery);
+</script>
+
+</head>
+
+<body>
+	
+	    <div class="container text-center">
+        <h1>Assessing Fuels Treatments in Southern California National Forests
+        in the Context of Climate Change</h1>
+    </div>
+    
+    
+    <div class="container">
+        <div class="masthead">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <ul class="nav">
+                            <li>
+                                <a href="../index.html">Home</a>
+                            </li>
+
+                            <li>
+                                <a href="findings.html">Key Findings</a>
+                            </li>
+
+                            <li>
+                                <a href="data.html">Data</a>
+                            </li>
+
+                            <li class="active">
+                                <a href="climatescenarios.html">Climate
+                                Scenarios</a>
+                            </li>
+
+                            <li>
+                                <a href="howto.html">BEST PRACTICES and
+                                Tutorial</a>
+                            </li>
+
+                            <li>
+                                <a href=
+                                "publications.html">Publications</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- /.navbar -->
+        </div>
+    
+    
+            <div class="row text-center" >
+        	
+        	<div class="span12">
+        		<h3 class="text-center">Instructions</h3>
+        		<div class="row">
+        		
+        		<div class="span6">
+        			
+        		<h5>Step 1</h5>	
+        		
+        		<p class="text-center">
+        			The graphic below shows the Southern California Region.
+        		</p>
+	
+        		</div>
+        		
+        		        		<div class="span6">
+        			
+        		<h5>Step 2</h5>	
+        		
+        		<p class="text-center">
+        			This step replaces the graphic below step 1 with a graph. Select all options below and press the DISPLAY GRAPH button to request graph.
+        			
+	
+        		</div>
+        		        		</div>
+        		
+        	</div>
+        	
+        </div>
+    
+    <hr class="featurette-divider">
+    <div class="row">
+    
+    
+    
+    
+    <div class="span6">
+    	
+    		
+		
+				<!--<img id="target_image" src="../images/visualization/rcp45_2030-2060_Annual_tasmean_vs_Annual_tasmeanSCA.png" style="height:400px"/> -->
+				<img id="target_image" src="../images/visualization/S_CA_Region.png" alt="Study Image"/>
+		
+    </div>
+    
+    
+    	<div class="span6">
+    		<table id="table" class="table table-striped table-bordered">
+    	
+    			
+    			<tr>
+				<td>Spatial Region: </td>
+				<td>
+					<select name="spatt" id="spatt">
+						<option value="SCA" selected="selected">S.CA (33-35N, 116-121W)</option>
+					</select>
+				</td>
+	
+	            <!-- Use this example to re-add the hoverable question mark -->
+				 <!-- <td>
+					<div id="typeHelp" title="Click here to see a map of this region"><a href="../images/visualization/S_CA_Region.png">?</a></div>
+				</td> -->
+	
+	
+				</tr>
+    			
+    			
+    			<tr>
+    			<td>Time Period:</td>
+			<td>
+			<select name="periodd" id="periodd">
+				<option select="selected" value="2030-2060">2030-2060</option>
+				<option value="2070-2100">2070-2100</option>
+			</select>
+			</td>
+    			</tr>
+    			
+    			
+    			
+    			<tr>
+			<td>Experiment:</td>
+			<td>
+			<select name="scenn" id="scenn">
+				<option select="selected" value="rcp45">RCP4.5 (CMIP5)</option>
+				<option value="rcp85"  >RCP8.5    (CMIP5)</option>
+				<option value="SRESA1B">SRES A1B  (CMIP3)</option>
+			</select>
+			</td>
+			</tr>
+    			
+    			
+    		<tr>
+				<td><b>Y-Axis</b> </td><td></td>
+			</tr>
+			<tr>
+        			<td>Variable:</td>
+				<td>
+				<select name="varr1" id="varr1">
+					<option select="selected" value="tasmean">Temperature</option>
+					<option  value="pr">Precipitation</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+			<td>Season:</td>
+			<td>
+			<select name="seass1" id="seass1">
+				<option select="selected" value="Annual">Annual</option>
+				<option value="Nov-Apr">Nov-Apr</option>
+				<option value="May-Oct">May-Oct</option>
+				<option value="DJF">DJF</option>
+				<option value="MAM">MAM</option>
+				<option value="JJA">JJA</option>
+				<option value="SON">SON</option>
+			</select>
+			</td>
+			</tr>
+			
+			
+			<tr>
+				<td><b>X-Axis</b> </td><td></td>
+			</tr>
+			<tr>
+			<td>Variable:</td>
+			<td>
+			<select name="varr2" id="varr2">
+				<option select="selected" value="tasmean">Temperature</option>
+				<option value="pr">Precipitation</option>
+			</select>
+			</td>
+			</tr>
+			<tr>
+			<td>Season:</td>
+			<td>
+			<select name="seass2" id="seass2">
+				<option select="selected" value="Annual">Annual</option>
+				<option value="Nov-Apr">Nov-Apr</option>
+				<option value="May-Oct">May-Oct</option>
+				<option value="DJF">DJF</option>
+				<option value="MAM">MAM</option>
+				<option value="JJA">JJA</option>
+				<option value="SON">SON</option>
+			</select>
+			</td>
+			</tr>
+			
+			
+			
+    		</table>
+
+    	<input type="button" value="DISPLAY GRAPH" onClick="getPic()" class="btn btn-large btn-primary pull-right"/></td>	
+    	</div>
+    </div>
+    
+    
+
+</div><!--end innner wrap-->
+<br />
+
+  <div class="container">
+        <hr class="featurette-divider">
+
+        <div class="navbar navbar-bottom" id="footer">
+            <div class="row text-center">
+                <div class="span4">
+                    <img id="jfspLogo" src="../images/jfsp.png"> 
+                </div>
+
+                <div class="span4">
+                    <img id="uiLogo" src="../images/uidaho.png"> 
+                </div>
+
+                <div class="span4">
+                    <img id="driLogo" src="../images/dri.jpg"> 
+                </div>
+            </div>
+            
+            <div class="row text-center">
+                <div class="span4">
+                    Joint Fire Science Program
+                </div>
+
+                <div class="span4">
+                    University of Idaho
+                </div>
+
+                <div class="span4">
+                    Desert Research Institute
+                </div>
+            </div>
+            
+            <hr class="featurette-divider">
+
+            <div class="row">
+                <div class="span12 text-center">
+                    <p><a href="../index.html">Home</a> - <a href=
+                    "findings.html">Key Findings</a> - <a href=
+                    "data.html">Data</a> - <a href=
+                    "climatescenarios.html">Climate Scenarios</a> -
+                    <a href="howto.html">BEST PRACTICES and Tutorial</a>
+                    - <a href="publications.html">Publications</a></p>
+                </div>
+
+                <div class="span12 text-center">
+                    <p>All Rights Reserved. © 2012</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p class="pull-right"><a href="#">Back to top</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿#footer img{
+	padding-left:10px;
+	width:75px;
+	height:75px;
+
+}
+
+#break {
+	height: 350px;
+	width: 940px;
+}
+
+#map{
+	width:470px;
+	height:400px;	
+}
+
+
+#jQueryTool{
+	width:450px;
+	height:500px;	
+}
+
+.hide {
+	display:none;
+}
+
+#mainHelp, #typeHelp,#nameHelp,#modelHelp,#runHelp,#scenarioHelp {	
+	cursor: pointer;
+ 	width: 16px;
+	height: 16px;
+	background-color: #89A4CC;
+	line-height: 16px;
+	color: white;
+	font-size: 13px;
+	font-weight: bold;
+	border-radius: 8px;
+	text-align: center;
+	position: relative;
+}
+	#map_canvas { height: 100% }
